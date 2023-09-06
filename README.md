@@ -47,4 +47,8 @@ You can also exclude areas of the image within specified bounding boxes, by usin
 staramp --dog 12 --dogthresh 140 --dogamp 70 --miny 0 --maxy 0 --exclude "0,1590,1287,2013" -f images/stars2.png
 ```
 
-Here the bounding box to be excluded has top left coordinate **0,1590** and bottom right coordinate **1287,2013**. If you specify additional numbers then you can have multiple exclusion areas.
+Here the bounding box to be excluded has top left coordinate **0,1590** and bottom right coordinate **1287,2013**. If you specify additional numbers then you can have multiple exclusion areas. An example might be:
+
+``` bash
+--exclude "(0,1590,1287,2013),(50,100,300,500)"
+```
