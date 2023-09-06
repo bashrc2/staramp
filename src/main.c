@@ -30,6 +30,7 @@ int main(int argc, char* argv[])
     int i;
     char * filename = NULL;
     char output_filename[255];
+    char dog_filename[255];
     unsigned char * image_data = NULL;
     unsigned char * dog_image = NULL;
     unsigned int image_width=0;
@@ -43,6 +44,7 @@ int main(int argc, char* argv[])
     int maximum_y = 0;
 
     sprintf((char*)output_filename,"%s","result.png");
+    sprintf((char*)dog_filename,"%s","dog.png");
 
     for (i=1;i<argc;i+=2) {
         if ((strcmp(argv[i],"-f")==0) ||
@@ -113,6 +115,10 @@ int main(int argc, char* argv[])
                                dog_image,
                                image_width, image_height);
         free(integral_image);
+
+        /* save the difference of gaussians image */
+        write_png_file(dog_filename, image_width, image_height, 24, dog_image);
+
         if (amplify_with_dog != 0) {
           amplify_image(dog_image, image_width, image_height, image_bitsperpixel,
                         amplify_with_dog, minimum_y, maximum_y, image_data);
