@@ -81,7 +81,9 @@ int main(int argc, char* argv[])
             if ((argv[i+1][c] >= '0') && (argv[i+1][c] <= '9')) {
               numstr[n++] = argv[i+1][c];
             }
-            if ((argv[i+1][c] == ',') || (c == strlen(argv[i+1])-1)) {
+            if ((argv[i+1][c] == ',') ||
+                (argv[i+1][c] == ';') ||
+                (c == strlen(argv[i+1])-1)) {
               if (numstr[0] != 0) {
                 numstr[n] = 0;
                 exclude_areas[no_of_exclude_areas][idx++] = atoi(numstr);
