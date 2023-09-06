@@ -59,6 +59,8 @@ void amplify_image(unsigned char * img,
                    int bitsperpixel,
                    int amplify,
                    int min_y, int max_y,
+                   int no_of_exclude_areas,
+                   int exclude_areas[255][4],
                    unsigned char * output_img);
 
 #endif

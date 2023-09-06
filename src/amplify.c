@@ -24,21 +24,42 @@ void amplify_image(unsigned char * img,
                    int bitsperpixel,
                    int amplify,
                    int min_y, int max_y,
+                   int no_of_exclude_areas,
+                   int exclude_areas[255][4],
                    unsigned char * output_img)
 {
-  int x, y, n, value, c;
+  int x, y, n, value, c, ex, tx, ty, bx, by, excluded;
   int bytesperpixel = bitsperpixel/8;
 
   amplify += 100;
   if (max_y == 0) max_y = img_height;
   for (y = min_y; y < max_y; y++) {
     for (x = 5; x < img_width-5; x++) {
-      n = (y*img_width + x)*bytesperpixel;
-      for (c = 0; c < 3; c++) {
-        if (img[n+c] == 0) continue;
-        value = (int)output_img[n+c] * amplify / 100;
-        if (value > 255) value = 255;
-        output_img[n+c] = (unsigned char)value;
+      /* is this inside of an exclusion area? */
+      excluded = 0;
+      if (no_of_exclude_areas > 0) {
+        for (ex = 0; ex < no_of_exclude_areas; ex++) {
+          tx = exclude_areas[ex][0];
+          bx = exclude_areas[ex][2];
+          if ((x >= tx) && (x <= bx)) {
+            ty = exclude_areas[ex][1];
+            by = exclude_areas[ex][3];
+            if ((y >= ty) && (y <= by)) {
+              excluded = 1;
+              break;
+            }
+          }
+        }
+      }
+
+      if (excluded == 0) {
+        n = (y*img_width + x)*bytesperpixel;
+        for (c = 0; c < 3; c++) {
+          if (img[n+c] == 0) continue;
+          value = (int)output_img[n+c] * amplify / 100;
+          if (value > 255) value = 255;
+          output_img[n+c] = (unsigned char)value;
+        }
       }
     }
   }

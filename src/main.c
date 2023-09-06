@@ -27,10 +27,11 @@
 
 int main(int argc, char* argv[])
 {
-    int i;
+    int i, c, n, idx;
     char * filename = NULL;
     char output_filename[255];
     char dog_filename[255];
+    char numstr[255];
     unsigned char * image_data = NULL;
     unsigned char * dog_image = NULL;
     unsigned int image_width=0;
@@ -42,6 +43,8 @@ int main(int argc, char* argv[])
     int amplify_with_dog = 80;
     int minimum_y = 0;
     int maximum_y = 0;
+    int no_of_exclude_areas = 0;
+    int exclude_areas[255][4];
 
     sprintf((char*)output_filename,"%s","result.png");
     sprintf((char*)dog_filename,"%s","dog.png");
@@ -69,6 +72,28 @@ int main(int argc, char* argv[])
         }
         if (strcmp(argv[i],"--maxy")==0) {
           maximum_y = atoi(argv[i+1]);
+        }
+        if (strcmp(argv[i],"--exclude")==0) {
+          idx = 0;
+          n = 0;
+          numstr[0] = 0;
+          for (c = 0; c < strlen(argv[i+1]); c++) {
+            if ((argv[i+1][c] >= '0') && (argv[i+1][c] <= '9')) {
+              numstr[n++] = argv[i+1][c];
+            }
+            if ((argv[i+1][c] == ',') || (c == strlen(argv[i+1])-1)) {
+              if (numstr[0] != 0) {
+                numstr[n] = 0;
+                exclude_areas[no_of_exclude_areas][idx++] = atoi(numstr);
+              }
+              n = 0;
+              numstr[0] = 0;
+              if (idx == 4) {
+                no_of_exclude_areas++;
+                idx = 0;
+              }
+            }
+          }
         }
     }
 
@@ -121,7 +146,9 @@ int main(int argc, char* argv[])
 
         if (amplify_with_dog != 0) {
           amplify_image(dog_image, image_width, image_height, image_bitsperpixel,
-                        amplify_with_dog, minimum_y, maximum_y, image_data);
+                        amplify_with_dog, minimum_y, maximum_y,
+                        no_of_exclude_areas, exclude_areas,
+                        image_data);
           free(dog_image);
         }
     }

@@ -40,3 +40,11 @@ It produces a file called **result.png**
 **--maxy** sets the maximum Y axis coordinate to end processing at. This can be 0 which means process the whole image, or it can be some other value to exclude any scenery at the bottom of the photo.
 
 **-f** defines the night image to be processed. This must be in PNG format.
+
+You can also exclude areas of the image within specified bounding boxes, by using the **--exclude** option:
+
+``` bash
+staramp --dog 12 --dogthresh 140 --dogamp 70 --miny 0 --maxy 0 --exclude "0,1590,1287,2013" -f images/stars2.png
+```
+
+Here the bounding box to be excluded has top left coordinate **0,1590** and bottom right coordinate **1287,2013**. If you specify additional numbers then you can have multiple exclusion areas.
