@@ -4,6 +4,14 @@
 
 ## Installation
 
+On a Debian based distro:
+
+``` bash
+sudo apt install build-essential
+```
+
+Then build and install:
+
 ``` bash
 git clone https://gitlab.com/bashrc2/staramp
 cd staramp
@@ -13,13 +21,13 @@ sudo make install
 
 ## Usage
 
-An example of use can be seen within the *test.sh* script.
+An example of use can be seen within the **test.sh** script.
 
 ``` bash
 staramp --dog 8 --dogthresh 145 --dogamp 80 --miny 0 --maxy 2100 -f images/stars1.png
 ```
 
-It produces a file called *result.png**
+It produces a file called **result.png**
 
 **--dog** specifies the radius for the *difference of gaussians** filter. It should be approximately the same as the width of the stars in pixels within your image.
 
