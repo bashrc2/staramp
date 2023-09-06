@@ -1,6 +1,6 @@
-<img src="https://gitlab.com/bashrc2/staramp/-/blob/main/images/example.jpg?raw=true" width="70%"/>
-
 **staramp** detects stars within a night photo and then amplifies only the star pixels by some defined percentage, without altering the background.
+
+<img src="https://gitlab.com/bashrc2/staramp/-/raw/main/images/example.jpg?ref_type=heads" width="70%"/>
 
 ## Installation
 
