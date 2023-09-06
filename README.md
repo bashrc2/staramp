@@ -31,7 +31,9 @@ It produces a file called **result.png**
 
 **--dog** specifies the radius for the *difference of gaussians* filter. It should be approximately the same as the width of the stars in pixels within your image.
 
-**--dogthresh** applies a threshold to the *difference of gaussians* filter, so that faint pixels which might just be noise can be excluded.
+**--dogthresh** applies a threshold to the *difference of gaussians** filter, so that faint pixels which might just be noise can be excluded.
+
+**--dogamp** the amplification percentage.
 
 **--miny** sets the minimum Y axis coordinate to begin processing at. This is typically 0 (the top of the photo).
 
