@@ -26,10 +26,18 @@ void amplify_image(unsigned char * img,
                    int min_y, int max_y,
                    int no_of_exclude_areas,
                    int exclude_areas[255][4],
+                   int include_area[255],
                    unsigned char * output_img)
 {
   int x, y, n, value, c, ex, tx, ty, bx, by, excluded;
+  int no_of_include_points = 0;
   int bytesperpixel = bitsperpixel/8;
+
+  n = 0;
+  while ((n < 253) && (include_area[n] != -1)) {
+    n += 2;
+    no_of_include_points++;
+  }
 
   amplify += 100;
   if (max_y == 0) max_y = img_height;
@@ -49,6 +57,12 @@ void amplify_image(unsigned char * img,
               break;
             }
           }
+        }
+      }
+
+      if (include_area[0] > -1) {
+        if (point_in_polygon(x, y, include_area, no_of_include_points) == 0) {
+          excluded = 1;
         }
       }
 

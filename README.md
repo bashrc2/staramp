@@ -52,3 +52,9 @@ Here the bounding box to be excluded has top left coordinate **0,1590** and bott
 ``` bash
 --exclude "(0,1590,1287,2013),(50,100,300,500)"
 ```
+
+If excluding bounding boxes is insufficient, because the shape of the scenery is not very linear then you can define a polygon inside which the stars should be amplified. The polygon can have up to 127 vertices and is a series of **x,y** coordinates. For example:
+
+``` bash
+staramp --dog 12 --dogthresh 140 --dogamp 70 --miny 0 --maxy 0 --include "30,70,200,90,250,900,15,870" -f images/stars2.png
+```
