@@ -85,8 +85,7 @@ void amplify_image(unsigned char * img,
         for (c = 0; c < 3; c++) {
           if (img[n+c] == 0) continue;
           value = (int)output_img[n+c] * amplify / 100;
-          if (value <= 255)
-              output_img[n+c] = (unsigned char)value;
+          output_img[n+c] = (unsigned char)value;
         }
       }
     }
