@@ -29,7 +29,8 @@ void amplify_image(unsigned char * img,
                    int include_area[255],
                    unsigned char * output_img)
 {
-  int x, y, n, value, c, ex, tx, ty, bx, by, excluded, proceed;
+  int x, y, n, value, c, ex, tx, ty, bx, by, excluded;
+  int proceed, adaptive_amp, adapt;
   int no_of_include_points = 0;
   int bytesperpixel = bitsperpixel/8;
 
@@ -71,20 +72,26 @@ void amplify_image(unsigned char * img,
 
         /* when amplified does this pixel exceed 255? */
         proceed = 1;
-        for (c = 0; c < 3; c++) {
-          if (img[n+c] == 0) continue;
-          value = (int)output_img[n+c] * amplify / 100;
-          if (value > 255) {
-            proceed = 0;
-            break;
+        adaptive_amp = amplify;
+        for (adapt = 0; adapt < 2; adapt++) {
+          proceed = 1;
+          for (c = 0; c < 3; c++) {
+            if (img[n+c] == 0) continue;
+            value = (int)output_img[n+c] * adaptive_amp / 100;
+            if (value > 255) {
+              proceed = 0;
+              break;
+            }
           }
+          if (proceed == 1) break;
+          adaptive_amp /= 2;
         }
         if (proceed == 0) continue;
 
         /* amplify the pixel */
         for (c = 0; c < 3; c++) {
           if (img[n+c] == 0) continue;
-          value = (int)output_img[n+c] * amplify / 100;
+          value = (int)output_img[n+c] * adaptive_amp / 100;
           output_img[n+c] = (unsigned char)value;
         }
       }
